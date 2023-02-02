@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import ru.netology.Book;
 import ru.netology.Product;
 import ru.netology.Smartphone;
+import ru.netology.repository.AlreadyExistsException;
+import ru.netology.repository.NotFoundException;
 import ru.netology.repository.ProductRepository;
 
 public class ProductRepositoryTest {
@@ -88,5 +90,32 @@ public class ProductRepositoryTest {
         Product[] actual = repo.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void removeByIdWhenIncorrectId() {
+        ProductRepository repo = new ProductRepository();
+        repo.add(product1);
+        repo.add(product2);
+        repo.add(product3);
+        repo.add(product4);
+        repo.add(product5);
+        repo.add(product6);
+        repo.add(product7);
+
+        Assertions.assertThrows(NotFoundException.class,
+                () -> repo.removeById(401)
+        );
+    }
+
+    @Test
+    public void AddAlreadyExistId() {
+        ProductRepository repo = new ProductRepository();
+        repo.add(product1);
+
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.add(product1);
+        });
     }
 }

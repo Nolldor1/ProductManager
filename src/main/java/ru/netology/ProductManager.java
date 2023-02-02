@@ -4,15 +4,12 @@ import ru.netology.repository.ProductRepository;
 
 public class ProductManager {
     private ProductRepository repo;
-
     public ProductManager(ProductRepository repo) {
         this.repo = repo;
     }
-
     public void add(Product product) {
         repo.add(product);
     }
-
     public Product[] searchBy(String text) {
         Product[] result = new Product[0]; // тут будем хранить подошедшие запросу продукты
         for (Product product : repo.findAll()) {
